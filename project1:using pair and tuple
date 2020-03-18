@@ -1,0 +1,50 @@
+//Pair
+//This class couples together a pair of values, which may be of different types(T1 and T2). The individual values can be accessed through its public members first and second.
+//Pairs are a particular case of tuple.
+
+//Tuple
+//A tuple is an object capable to hold a collection of elements. Each element can be of a different type.
+
+#include <iostream> //cout
+#include <utility>  //pair, make_pair
+#include <string>   //string
+#include <tuple>    //tuple, get, tie, ignore
+
+using namespace std;
+
+int main()
+{
+  pair <string, double> p1;                 //default constructor
+  pair <string, double> p2("pork", 12.30);  //value init
+  pair <string, double> p3(product2);       //copy constructor
+  
+  p1 = make_pair(string("beef"), 31.20);    //using make_pair(move)
+  
+  p2.first = "chicken";
+  p2.second = 23.10;
+  
+  tuple<int, char> f1(10, 'x');
+  auto f2 = make_tuple("x^2", 3.10, 14, 'y');
+  
+  get<2>(f2) = 100;                         //access element
+  
+  int myint;
+  char mychar;
+  
+  tie(myint, mychar) = f1;                  //unpack elements
+  tie(ignore, ignore, myint, mychar) = f2;  //unpack (with ignore)
+  
+  mychar = get<3>(f2);
+  
+  get<0>(f1) = get<2>(f2);
+  get<1>(f1) = mychar;
+  
+  cout << p1.first << " " << p1.second << endl;
+  cout << p2.first << " " << p2.second << endl;
+  cout << p3.first << " " << p3.second << endl;
+  
+  cout << get<0>(f1) << endl;
+  cout << get<1>(f1) << endl;
+  
+  return 0;
+ }
