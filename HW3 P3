@@ -1,0 +1,76 @@
+#include <iostream>
+#include <set>
+
+using namespace std;
+
+class Student
+{
+private:
+    string name;
+    int english;
+    int math;
+public:
+    Student();
+    Student(string sname, int sen, int sm);
+    friend istream & operator>>(istream &in, Student &sobj);
+    friend ostream & operator<<(ostream &out, const Student &sobj);
+    bool operator <(const Student &sobj) const;
+};
+Student::Student()
+{
+    name = "Edward";
+    english = 100;
+    math = 100;
+}
+Student::Student(string sname, int sen, int sm)
+{
+    this->name = sname;
+    this->english = sen;
+    this->math = sm;
+}
+istream & operator>>(istream &in, Student &sobj)
+{
+    in >> sobj.name >> sobj.english >> sobj.math;
+    return in;
+}
+ostream & operator<<(ostream &out, const Student &sobj)
+{
+    out << sobj.name << " " << sobj.english << " " << sobj.math << endl;
+    return out;
+}
+bool Student::operator<(const Student &sobj) const
+{
+    return (this->english + this->math < sobj.english + sobj.math) || ((this->english + this->math == sobj.english + sobj.math) && (this->name < sobj.name));
+}
+int main()
+{
+    int students_number;
+    cin >> students_number;
+
+    Student s;
+    set<Student> sd;
+
+    for(int i = 0; i < students_number; i++)
+    {
+        cin >> s;
+        sd.insert(s);
+    }
+
+    set<Student>::iterator oi;
+
+    cout << "Set A:" << endl;
+    for(oi = sd.begin(); oi != sd.end(); oi++)
+    {
+        cout << *oi;
+    }
+
+    cout << endl;
+    set<Student>::reverse_iterator ori;
+
+    cout << "Set B:" << endl;
+    for(ori = sd.rbegin(); ori != sd.rend(); ori++)
+    {
+        cout << *ori;
+    }
+    return 0;
+}
